@@ -8,18 +8,27 @@ function Header(props) {
   console.log(location.pathname); 
 
   return (
-    <header className="header">
-      <a href={props.logolink}><img src={props.logoSrc} alt="Logo" className="logo" /></a>
-      <nav>
-        <a className={`user ${location.pathname === '/' ? 'active' : ''}`} href="../">user</a>
-       </nav>
+    <header>
+      <nav class="main-nav">
+      <a class="main-nav-logo" href="./">
+        <img
+          class="main-nav-logo-image"
+          src={props.logo}
+          alt="Argent Bank Logo"
+        />
+        <h1 class="sr-only">Argent Bank</h1>
+      </a>
+      <div>
+        <a class="main-nav-item" href="./sign-in">
+          <i class="fa fa-user-circle"></i>
+          Sign In
+        </a>
+      </div>
+    </nav>
     </header>
   );
 }
 
-Header.propTypes =  {
-  logolink: PropTypes.string,
-  logoSrc: PropTypes.string
-}
+
 
 export default Header;
