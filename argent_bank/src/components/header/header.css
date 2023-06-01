@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    margin: 0px 25px 25px 25px;
+  }
+
+nav{
+    display: flex;
+    flex-direction: row;
+    float: right; 
+}
+
+a{
+    width: fit-content;
+    margin-right: 20px;
+    color: #FF6060;
+    text-decoration: none;
+}
+.logo{
+    height: auto;
+}
+.home.active {
+    text-decoration: underline;
+  }
+.about.active{
+    text-decoration: underline;
+  }
