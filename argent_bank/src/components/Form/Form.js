@@ -7,7 +7,7 @@ import { loginSuccess } from '../../reducers';
 function Form(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Ajout de l'état pour le message d'erreur
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.isLoggedIn);
@@ -28,8 +28,7 @@ function Form(props) {
       if (response) {
         dispatch(loginSuccess());
       } else {
-        setErrorMessage("Invalid email or password"); // Mise à jour du message d'erreur en cas de mauvaise saisie
-      }
+        setErrorMessage("Invalid email or password");  }
     } catch (error) {
       console.error('Error Login:', error);
     }

@@ -1,13 +1,14 @@
 import React from 'react';
 import './header.css';
 import PropTypes from 'prop-types';
-import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../reducers';
+import { Link } from 'react-router-dom';
 
 function Header(props) {
-  const token=sessionStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const isLoggedIn = useSelector(state => state.isLoggedIn);
+  console.log(isLoggedIn)
   const dispatch = useDispatch();
 
 
@@ -20,25 +21,25 @@ function Header(props) {
   return (
     <header>
       <nav className="main-nav">
-        <a className="main-nav-logo" href="./">
-          <img
-            className="main-nav-logo-image"
-            src={props.logo}
-            alt="Argent Bank Logo"
-          />
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
+  <Link to="/" className="main-nav-logo">
+    <img
+      className="main-nav-logo-image"
+      src={props.logo}
+      alt="Argent Bank Logo"
+    />
+    <h1 className="sr-only">Argent Bank</h1>
+    </Link>
         <div>
           {isLoggedIn ? (
-            <a className="main-nav-item" onClick={handleLogout}>
+            <Link to="/" className="main-nav-item" onClick={handleLogout}>
               <i className="fa fa-sign-out"></i>
               Logout
-            </a>
+            </Link>
           ) : (
-            <a className="main-nav-item" href="./sign-in">
+            <Link to="/sign-in" className="main-nav-item">
               <i className="fa fa-user-circle"></i>
               Sign In
-            </a>
+            </Link>
           )}
         </div>
       </nav>
