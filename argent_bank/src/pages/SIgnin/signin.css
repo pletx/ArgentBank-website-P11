@@ -1,7 +1,9 @@
 .main {
     flex: 1;
   }
-  
+#Sign-in{
+  display: flex;
+}
   .bg-dark {
     background-color: #12002b;
   }

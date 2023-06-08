@@ -7,18 +7,25 @@ import User from './pages/User/user'
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 import logo from'./assets/img/argentBankLogo.png'
-
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './reducers';
+const store = configureStore({
+  reducer: rootReducer,
+});
 function App() {
   return (
-    <BrowserRouter>
+    <Provider store={store}>
+  <BrowserRouter>
     <Header logo={logo} logolink='/'/>
-      <Routes>
+    <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/sign-in" element={<Sign_in />} />
       <Route path="/user" element={<User />} />
-      </Routes>
-      <Footer footertxt='Copyright 2020 Argent Bank'/>
-      </BrowserRouter>
+    </Routes>
+    <Footer footertxt='Copyright 2020 Argent Bank'/>
+  </BrowserRouter>
+</Provider>
   );
 }
 

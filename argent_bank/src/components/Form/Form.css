@@ -1,7 +1,8 @@
 .input-remember {
     display: flex;
   }
-  
+.error-message{color: red;}
+
   .input-remember label {
     margin-left: 0.25rem;
   }
