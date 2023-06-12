@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { fetchlogin } from "../../services/Api_services";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { loginSuccess } from '../../reducers';
+import React, { useState } from "react";
 
-function Form(props) {
+function Form({ onFormSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector(state => state.isLoggedIn);
+  const [errorMessage] = useState("");
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -20,25 +13,10 @@ function Form(props) {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      const response = await fetchlogin(email, password);
-      if (response) {
-        dispatch(loginSuccess());
-      } else {
-        setErrorMessage("Invalid email or password");  }
-    } catch (error) {
-      console.error('Error Login:', error);
-    }
+    onFormSubmit(email, password);
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/user');
-    }
-  }, [isLoggedIn, navigate]);
 
   return (
     <form onSubmit={handleSubmit}>

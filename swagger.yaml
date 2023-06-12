@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Bank Argent API documentation
+  title: Bank Argent API Documentation
   description: Contains all available API endpoints in this codebase
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
@@ -33,6 +33,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -57,6 +58,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -65,17 +67,16 @@ paths:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
-      #produces:
-       # - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
     put:
       security:
         - Bearer: []
@@ -94,18 +95,94 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+  /user/transactions:
+    get:
+      summary: Get existing transactions
+      responses:
+        '200':
+          description: Success - Returns the list of transactions
+        '404':
+          description: No transactions found
+
+  /user/transactions/{id}:
+    get:
+      summary: Get a specific transaction
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: ID of the transaction in question
+          required: true
+      responses:
+        '200':
+          description: Returns the information of the chosen transaction
+        '404':
+          description: Transaction not found or does not exist
+
+    delete:
+      summary: Delete a specific transaction
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: ID of the transaction to delete
+          required: true
+      responses:
+        '200':
+          description: Transaction deleted
+        '404':
+          description: Transaction not found
+        '401':
+          description: Invalid token
+
+  /user/transactions/new:
+    post:
+      summary: Perform a new transaction
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                senderAccountId:
+                  type: string
+                  description: ID of the sender's account
+                receiverAccountId:
+                  type: string
+                  description: ID of the receiver's account
+                amount:
+                  type: number
+                  description: Transaction amount
+              required:
+                - senderAccountId
+                - receiverAccountId
+                - amount
+      responses:
+        '201':
+          description: Success - Transaction performed successfully
+        '400':
+          description: Bad request - Error in the provided data
+        '404':
+          description: Sender or receiver account not found
+        '401':
+          description: Invalid token
+
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+
 definitions:
   User:
     properties:
@@ -124,6 +201,7 @@ definitions:
       userName:
         type: string
         description: user public name
+
   Login:
     properties:
       email:
@@ -132,6 +210,7 @@ definitions:
       password:
         type: string
         description: user password
+
   ApiResponse:
     type: object
     properties:
@@ -146,11 +225,13 @@ definitions:
             type: string
           email:
             type: string
+
   LoginResponse:
     type: object
     properties:
       token:
         type: string
+
   UserProfile:
     type: object
     properties:

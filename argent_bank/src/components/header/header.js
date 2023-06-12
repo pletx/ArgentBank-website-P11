@@ -6,35 +6,40 @@ import { logout } from '../../reducers';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
-  const token = sessionStorage.getItem('token')
-  const isLoggedIn = useSelector(state => state.isLoggedIn);
-  console.log(isLoggedIn)
+  const userConnected = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-
   const handleLogout = () => {
-    console.log("Logout!!!")
+    console.log("Logout!!!");
     dispatch(logout());
-    sessionStorage.removeItem(token)
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   };
 
   return (
     <header>
       <nav className="main-nav">
-  <Link to="/" className="main-nav-logo">
-    <img
-      className="main-nav-logo-image"
-      src={props.logo}
-      alt="Argent Bank Logo"
-    />
-    <h1 className="sr-only">Argent Bank</h1>
-    </Link>
+        <Link to="/" className="main-nav-logo">
+          <img
+            className="main-nav-logo-image"
+            src={props.logo}
+            alt="Argent Bank Logo"
+          />
+          <h1 className="sr-only">Argent Bank</h1>
+        </Link>
         <div>
-          {isLoggedIn ? (
-            <Link to="/" className="main-nav-item" onClick={handleLogout}>
-              <i className="fa fa-sign-out"></i>
-              Logout
-            </Link>
+          {userConnected !== null ? (
+            <>
+            <Link to="/user" className="main-nav-item">
+                <i className="fa fa-user"></i>
+                {userConnected.userName}
+              </Link>
+              <Link to="/" className="main-nav-item" onClick={handleLogout}>
+                <i className="fa fa-sign-out"></i>
+                Logout
+              </Link>
+              
+            </>
           ) : (
             <Link to="/sign-in" className="main-nav-item">
               <i className="fa fa-user-circle"></i>
@@ -46,5 +51,9 @@ function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  logo: PropTypes.string.isRequired,
+};
 
 export default Header;
