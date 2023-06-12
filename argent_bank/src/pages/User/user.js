@@ -16,21 +16,37 @@ function User() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null)
+      { const response = await editname(newName,true);
+        const userData=await Getuserdata(true);
+        dispatch(await loginSuccess(userData));}
 
-    try { const response = await editname(newName);
-      
-      console.log(response)
-      navigate('/user')
-      const userData=await Getuserdata();
-      dispatch(await loginSuccess(userData));
+      if(sessionStorage.getItem('token')!== undefined && sessionStorage.getItem('token')!== null)
+      {const response = await editname(newName,false);
+      const userData=await Getuserdata(false);
+      dispatch(await loginSuccess(userData));}
     } catch (error) {
       console.error('Error submitting new name:', error);
     }
     setIsEditing(false);
+    navigate('/user')
   };
+  const autoConnect = async (rememberme) => {
+    const userData=await Getuserdata(rememberme);
+      if(userData){
+        dispatch(await loginSuccess(userData))
+      }
+      }
+    if(userConnected===null || userConnected===undefined ){
+      if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null) 
+          {autoConnect(true)}
+      if (sessionStorage.getItem('token')!==undefined && sessionStorage.getItem('token')!== null)
+        {autoConnect(false)}
+    }
   useEffect(() => {
     if (userConnected===null) {
-      navigate('/sign-in');
+      navigate('/login');
     }
   }, [userConnected, navigate]);
 

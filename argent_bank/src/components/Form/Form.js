@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function Form({ onFormSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [errorMessage] = useState("");
 
   const handleEmailChange = (event) => {
@@ -12,10 +13,12 @@ function Form({ onFormSubmit }) {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-
+  const handleRememberMeChange = (event) => {
+    setRememberMe(event.target.checked);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    onFormSubmit(email, password);
+    onFormSubmit(email, password,rememberMe);
   };
 
   return (
@@ -30,7 +33,7 @@ function Form({ onFormSubmit }) {
       </div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <div className="input-remember">
-        <input type="checkbox" id="remember-me" />
+        <input type="checkbox" id="remember-me" onChange={handleRememberMeChange}/>
         <label htmlFor="remember-me">Remember me</label>
       </div>
       <button type="submit" className="sign-in-button">Sign In</button>

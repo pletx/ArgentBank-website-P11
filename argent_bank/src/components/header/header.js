@@ -8,14 +8,12 @@ import { Link } from 'react-router-dom';
 function Header(props) {
   const userConnected = useSelector(state => state.user);
   const dispatch = useDispatch();
-
   const handleLogout = () => {
     console.log("Logout!!!");
     dispatch(logout());
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
   };
-
   return (
     <header>
       <nav className="main-nav">
@@ -28,7 +26,7 @@ function Header(props) {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-          {userConnected !== null ? (
+          {userConnected !== null  && userConnected!==undefined ?(
             <>
             <Link to="/user" className="main-nav-item">
                 <i className="fa fa-user"></i>
@@ -41,9 +39,9 @@ function Header(props) {
               
             </>
           ) : (
-            <Link to="/sign-in" className="main-nav-item">
+            <Link to="/login" className="main-nav-item">
               <i className="fa fa-user-circle"></i>
-              Sign In
+              Login
             </Link>
           )}
         </div>
