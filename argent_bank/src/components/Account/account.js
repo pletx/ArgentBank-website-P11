@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './account.css'
 function account(props) {
-  return (<section class="account">
-  <div class="account-content-wrapper">
-    <h3 class="account-title">{props.accounttitle}</h3>
-    <p class="account-amount">{props.accountamount}</p>
-    <p class="account-amount-description">{props.accountdescription}</p>
+  return (<section className="account">
+  <div className="account-content-wrapper">
+    <h3 className="account-title">{props.accounttitle}</h3>
+    <p className="account-amount">{props.accountamount}</p>
+    <p className="account-amount-description">{props.accountdescription}</p>
   </div>
-  <div class="account-content-wrapper cta">
-    <button class="transaction-button">View transactions</button>
+  <div className="account-content-wrapper cta">
+    <button className="transaction-button">View transactions</button>
   </div>
 </section>);
 }

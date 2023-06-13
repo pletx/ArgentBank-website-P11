@@ -28,7 +28,7 @@ function Header(props) {
         <div>
           {userConnected !== null  && userConnected!==undefined ?(
             <>
-            <Link to="/user" className="main-nav-item">
+            <Link to="/profile" className="main-nav-item">
                 <i className="fa fa-user"></i>
                 {userConnected.userName}
               </Link>

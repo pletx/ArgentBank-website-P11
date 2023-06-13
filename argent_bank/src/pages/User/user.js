@@ -31,7 +31,7 @@ function User() {
     }
     setIsEditing(false);
     
-    navigate('/user')
+    navigate('/profile')
   };
   const tokenCheck = async (rememberme) => {
     const checkResponse = await Getuserdata(rememberme);
@@ -46,7 +46,7 @@ function User() {
     if (!userConnected) {
            navigate('/login');}
     else {
-      navigate('/user');
+      navigate('/profile');
   }}, [userConnected, navigate]);
 
     if (userConnected!==null && userConnected!==undefined){
@@ -54,7 +54,7 @@ function User() {
         <div id='user'>
           <main className="main bg-dark">
             <div className="header">
-              <h1>Welcome back<br />{userConnected.firstName}</h1>
+              <h1>Welcome back<br />{userConnected.firstName} {userConnected.lastName}</h1>
               {isEditing ? (
                 <form onSubmit={handleSubmit}>
                   <input

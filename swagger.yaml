@@ -3,7 +3,6 @@ info:
   title: Bank Argent API Documentation
   description: Contains all available API endpoints in this codebase
   version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
 host: localhost:3001
 basePath: /api/v1
 schemes:
@@ -62,7 +61,7 @@ paths:
   /user/profile:
     post:
       security:
-        - Bearer: []
+        - bearerAuth: []
       tags:
         - User Module
       summary: User Profile API
@@ -79,7 +78,7 @@ paths:
 
     put:
       security:
-        - Bearer: []
+        - bearerAuth: []
       tags:
         - User Module
       summary: User Profile API
@@ -95,7 +94,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successfully
+          description: User profile updated successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -103,50 +102,116 @@ paths:
         '500':
           description: Internal Server Error
 
-  /user/transactions:
+  /accounts/{accountId}/transactions:
     get:
-      summary: Get existing transactions
-      responses:
-        '200':
-          description: Success - Returns the list of transactions
-        '404':
-          description: No transactions found
-
-  /user/transactions/{id}:
-    get:
-      summary: Get a specific transaction
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Get all transactions for a specific account
+      description: Retrieves transactions for a specific account
       parameters:
-        - name: id
-          type: string
+        - name: accountId
           in: path
-          description: ID of the transaction in question
+          description: ID of the account
           required: true
+          type: string
       responses:
         '200':
-          description: Returns the information of the chosen transaction
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account
+        '500':
+          description: Internal Server Error
+        
+  /accounts/{accountId}/transactions/{transactionId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Get a specific transaction for a specific account
+      description: Retrieves information about a specific transaction for a specific account
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Transaction's information retrieved successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
         '404':
           description: Transaction not found or does not exist
-
+        '500':
+          description: Internal Server Error
+        
     delete:
-      summary: Delete a specific transaction
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summa ry: Delete a specific transaction for a specific account
+      description: Deletes a specific transaction for a specific account
       parameters:
-        - name: id
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
           type: string
+        - name: transactionId
           in: path
           description: ID of the transaction to delete
           required: true
+          type: string
       responses:
         '200':
-          description: Transaction deleted
+          description: Transaction deleted successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
         '404':
           description: Transaction not found
-        '401':
-          description: Invalid token
-
-  /user/transactions/new:
-    post:
-      summary: Perform a new transaction
-      parameters: []
+        '500':
+          description: Internal Server Error
+        
+  /accounts/{accountId}/transactions/{transactionId}/category:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Modify the category of a specific transaction
+      description: Modifies the category of a specific transaction for a specific account
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to modify the category
+          required: true
+          type: string
       requestBody:
         required: true
         content:
@@ -154,86 +219,113 @@ paths:
             schema:
               type: object
               properties:
-                senderAccountId:
+                category:
                   type: string
-                  description: ID of the sender's account
-                receiverAccountId:
-                  type: string
-                  description: ID of the receiver's account
-                amount:
-                  type: number
-                  description: Transaction amount
+                  description: Updated category of the transaction
               required:
-                - senderAccountId
-                - receiverAccountId
-                - amount
+                - category
       responses:
-        '201':
-          description: Success - Transaction performed successfully
+        '200':
+          description: Transaction category modified successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
         '400':
           description: Bad request - Error in the provided data
-        '404':
-          description: Sender or receiver account not found
         '401':
-          description: Invalid token
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
 
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+  /accounts/{accountId}/transactions/{transactionId}/note:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Modify the note of a specific transaction
+      description: Modifies the note of a specific transaction for a specific account
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to modify the note
+          required: true
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+                  description: Updated note of the transaction
+              required:
+                - note
+      responses:
+        '200':
+          description: Transaction note modified successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Bad request - Error in the provided data
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
 
 definitions:
-  User:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
-      userName:
-        type: string
-        description: user public name
-
-  Login:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-
   ApiResponse:
     type: object
     properties:
-      status:
-        type: integer
       message:
         type: string
-      body:
+      data:
         type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
-
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
   LoginResponse:
     type: object
     properties:
       token:
         type: string
-
+      user:
+        $ref: '#/definitions/User'
+  User:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
   UserProfile:
     type: object
     properties:
-      userName:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
         type: string

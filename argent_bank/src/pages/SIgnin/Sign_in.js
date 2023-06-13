@@ -32,7 +32,7 @@ function Sign_in() {
   const tokenCheck = async (rememberme) => {
     const checkResponse = await Getuserdata(rememberme);
     console.log('checkResponse', checkResponse, rememberme);
-    if (checkResponse) {
+    if (checkResponse.status === 200) {
       console.log('autoconnec ? avec ', checkResponse.body);
       dispatch(await loginSuccess(checkResponse.body));
       return true;
@@ -46,14 +46,14 @@ function Sign_in() {
       console.log('userConnected', userConnected);
       if (tokenCheck(false) === true || tokenCheck(true) === true) {
         console.log('Déjà connecté');
-        navigate('/user');
+        navigate('/profile');
       } else {
         console.log('aucun token', userConnected);
         navigate('/login');
       }
     }
     else {
-      navigate('/user');
+      navigate('/profile');
   }}, [userConnected, navigate]);
 
       return (

@@ -23,7 +23,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Sign_in />} />
-      <Route path="/user" element={<User />} />
+      <Route path="/profile" element={<User />} />
     </Routes>
     <Footer footertxt='Copyright 2020 Argent Bank'/>
   </BrowserRouter>

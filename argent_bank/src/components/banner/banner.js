@@ -3,7 +3,7 @@ import './banner.css';
 import PropTypes from 'prop-types';
 function Banner(props){
     return(
-        <div class="hero">
+        <div className="hero">
         <section className="hero-content">
           <h2 className="sr-only">{props.sronly}</h2>
           <p className="subtitle">{props.subtitle1}</p>

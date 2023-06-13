@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import './features.css';
 function Features(props) {
     return (
-        <section class="features">
-            <h2 class="sr-only">Features</h2>
+        <section className="features">
+            <h2 className="sr-only">Features</h2>
             <Feature icon={chaticon}
                 iconalt='Chat Icon'
                 featuretitle='You are our #1 priority'
