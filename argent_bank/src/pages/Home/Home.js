@@ -11,7 +11,7 @@ const Home = () => {
   const autoConnect = async (rememberme) => {
   const userData=await Getuserdata(rememberme);
     if(userData){
-      dispatch(await loginSuccess(userData))
+      dispatch(await loginSuccess(userData.body))
     }
     }
   if(userConnected===null || userConnected===undefined ){
@@ -20,6 +20,7 @@ const Home = () => {
     if (sessionStorage.getItem('token')!==undefined && sessionStorage.getItem('token')!== null)
       {autoConnect(false)}
   }
+  console.log(userConnected)
   return (
     <main>
       <Banner 

@@ -1,7 +1,6 @@
 
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 export const fetchlogin = async (email, password,rememberme) => {
-
   try {
     const response = await fetch(`${API_BASE_URL}/user/login`, {
       method: 'POST',
@@ -16,19 +15,13 @@ export const fetchlogin = async (email, password,rememberme) => {
     const data = await response.json();
    
     if (data.body !== undefined) {
-     
       const token = data.body.token;
       if(rememberme===true)
       {localStorage.setItem('token', token);}
       
       else
       {sessionStorage.setItem('token', token);}
-      
-
       return true
-    }
-    else{
-      return false
     }
   } catch (error) {
     console.error('Error Login:', error);
@@ -46,7 +39,7 @@ export const Getuserdata = async (rememberme) => {
       },
     });
     const data = await response.json();
-    return data.body; } 
+    return data; } 
     catch (error) {
     console.error('Error Getuserdata:', error);
     throw error;}
@@ -61,7 +54,7 @@ if(rememberme===false){
       },
     });
     const data = await response.json();
-    return data.body; } 
+    return data; } 
 
     catch (error) {
     console.error('Error Getuserdata:', error);
@@ -95,9 +88,9 @@ export const editname = async (newName,rememberme) => {
         userName: newName,
       }),
     });
-
     const data = await response.json();
     console.log(data)
+    return data
   } catch (error) {
     console.error('Error Editname:', error);
   }}
