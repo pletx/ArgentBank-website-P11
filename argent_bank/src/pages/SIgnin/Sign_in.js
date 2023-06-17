@@ -35,39 +35,43 @@ function Sign_in() {
     if (checkResponse.status === 200) {
       console.log('autoconnec ? avec ', checkResponse.body);
       dispatch(await loginSuccess(checkResponse.body));
-      return true;
-    } else {
-      return false;
-    }
+      navigate('/profile')
+    } 
   };
 
   useEffect(() => {
     if (!userConnected) {
       console.log('userConnected', userConnected);
-      if (tokenCheck(false) === true || tokenCheck(true) === true) {
-        console.log('Déjà connecté');
-        navigate('/profile');
-      } else {
+      if(sessionStorage.getItem('token')) {
+        tokenCheck(false);}
+
+      if(localStorage.getItem('token')) {
+        tokenCheck(true);}
+        
+      else {
         console.log('aucun token', userConnected);
         navigate('/login');
+        
       }
     }
     else {
       navigate('/profile');
-  }}, [userConnected, navigate]);
-
-      return (
-        <div id="Sign-in">
-          <main className="main bg-dark">
-            <section className="sign-in-content">
-              <i className="fa fa-user-circle sign-in-icon"></i>
-              <h1>Login</h1>
-              <Form onFormSubmit={handleSubmit} />
-            </section>
-          </main>
-        </div>
-      );
     }
+  }, [userConnected]);
+
+  return (<>
+    {!userConnected && 
+    <div id="Sign-in">
+      <main className="main bg-dark">
+        <section className="sign-in-content">
+          <i className="fa fa-user-circle sign-in-icon"></i>
+          <h1>Login</h1>
+          <Form onFormSubmit={handleSubmit} />
+        </section>
+      </main>
+    </div>}</>
+  );
+}
 
 
 export default Sign_in;

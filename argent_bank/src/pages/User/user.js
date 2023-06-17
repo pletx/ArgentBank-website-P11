@@ -35,19 +35,32 @@ function User() {
   };
   const tokenCheck = async (rememberme) => {
     const checkResponse = await Getuserdata(rememberme);
-    console.log('checkResponse',checkResponse,rememberme)
-    if(checkResponse){
-      console.log('autoconnec ? avec ',checkResponse.body)
-      dispatch(await loginSuccess(checkResponse.body))
-    return true}
-    else{return false}
+    console.log('checkResponse', checkResponse, rememberme);
+    if (checkResponse.status === 200) {
+      console.log('autoconnec ? avec ', checkResponse.body);
+      dispatch(await loginSuccess(checkResponse.body));
+      navigate('/profile')
+    } 
   };
- useEffect(() => {
+  useEffect(() => {
     if (!userConnected) {
-           navigate('/login');}
+      console.log('userConnected', userConnected);
+      if(sessionStorage.getItem('token')) {
+        tokenCheck(false);}
+
+      if(localStorage.getItem('token')) {
+        tokenCheck(true);}
+        
+      else {
+        console.log('aucun token', userConnected);
+        navigate('/login');
+        
+      }
+    }
     else {
       navigate('/profile');
-  }}, [userConnected, navigate]);
+    }
+  }, [userConnected]);
 
     if (userConnected!==null && userConnected!==undefined){
       return (

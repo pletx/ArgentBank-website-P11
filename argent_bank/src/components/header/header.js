@@ -26,6 +26,7 @@ function Header(props) {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
+          
           {userConnected !== null  && userConnected!==undefined ?(
             <>
             <Link to="/profile" className="main-nav-item">
@@ -41,7 +42,7 @@ function Header(props) {
           ) : (
             <Link to="/login" className="main-nav-item">
               <i className="fa fa-user-circle"></i>
-              Login
+              Sign in
             </Link>
           )}
         </div>

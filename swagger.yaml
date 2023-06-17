@@ -105,7 +105,7 @@ paths:
   /accounts/{accountId}/transactions:
     get:
       security:
-        - bearerAuth: []
+        - bearer: []
       tags:
         - Transaction Module
       summary: Get all transactions for a specific account
@@ -114,6 +114,11 @@ paths:
         - name: accountId
           in: path
           description: ID of the account
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: Attach jwt token
           required: true
           type: string
       responses:
@@ -166,7 +171,7 @@ paths:
         - bearerAuth: []
       tags:
         - Transaction Module
-      summa ry: Delete a specific transaction for a specific account
+      summary: Delete a specific transaction for a specific account
       description: Deletes a specific transaction for a specific account
       parameters:
         - name: accountId

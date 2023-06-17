@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'; 
 import Home from './pages/Home/Home';
 import Sign_in from './pages/SIgnin/Sign_in';
-import User from './pages/User/user'
+import User from './pages/User/user';
+import NotFound from './pages/NotFound/NotFound';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 import logo from'./assets/img/argentBankLogo.png'
@@ -24,6 +25,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Sign_in />} />
       <Route path="/profile" element={<User />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
     <Footer footertxt='Copyright 2020 Argent Bank'/>
   </BrowserRouter>

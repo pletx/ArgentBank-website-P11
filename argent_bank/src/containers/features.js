@@ -16,12 +16,12 @@ function Features(props) {
                 24/7 chat or through a phone call in less than 5 minutes.
               ' />
 
-            <Feature icon={securityicon}
+            <Feature icon={moneyicon}
                 iconalt='Money Icon'
                 featuretitle='More savings means higher rates'
                 featurecontent=' The more you save with us, the higher your interest rate will be!' />
 
-            <Feature icon={moneyicon}
+            <Feature icon={securityicon}
                 iconalt='Security Icon'
                 featuretitle='Security you can trust'
                 featurecontent='We use top of the line encryption to make sure your data and money
