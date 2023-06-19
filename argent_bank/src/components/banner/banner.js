@@ -14,5 +14,12 @@ function Banner(props){
       </div>
     )
 }
+Banner.propTypes = {
+  sronly: PropTypes.string.isRequired,
+  subtitle1: PropTypes.string.isRequired,
+  subtitle2: PropTypes.string.isRequired,
+  subtitle3: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 export default Banner;

@@ -1,19 +1,17 @@
 import React from 'react';
 import './header.css';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../reducers';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
   const userConnected = useSelector(state => state.user);
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    console.log("Logout!!!");
-    dispatch(logout());
-    localStorage.removeItem('token');
-    sessionStorage.removeItem('token');
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    props.headerLogout();
   };
+
   return (
     <header>
       <nav className="main-nav">
@@ -21,15 +19,14 @@ function Header(props) {
           <img
             className="main-nav-logo-image"
             src={props.logo}
-            alt="Argent Bank Logo"
+            alt={props.logo}
           />
-          <h1 className="sr-only">Argent Bank</h1>
+          <h1 className="sr-only">{props.title}</h1>
         </Link>
         <div>
-          
-          {userConnected !== null  && userConnected!==undefined ?(
+          {userConnected !== null && userConnected !== undefined ? (
             <>
-            <Link to="/profile" className="main-nav-item">
+              <Link to="/profile" className="main-nav-item">
                 <i className="fa fa-user"></i>
                 {userConnected.userName}
               </Link>
@@ -37,7 +34,6 @@ function Header(props) {
                 <i className="fa fa-sign-out"></i>
                 Logout
               </Link>
-              
             </>
           ) : (
             <Link to="/login" className="main-nav-item">
@@ -53,6 +49,8 @@ function Header(props) {
 
 Header.propTypes = {
   logo: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  headerLogout: PropTypes.func.isRequired,
 };
 
 export default Header;

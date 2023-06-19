@@ -18,12 +18,12 @@ function User() {
     event.preventDefault();
     try {
       if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null)
-      { const response = await editname(newName,true);
+      { await editname(newName,true);
         const userData=await Getuserdata(true);
         dispatch(await loginSuccess(userData.body));}
 
       if(sessionStorage.getItem('token')!== undefined && sessionStorage.getItem('token')!== null)
-      {const response = await editname(newName,false);
+      {await editname(newName,false);
       const userData=await Getuserdata(false);
       dispatch(await loginSuccess(userData.body));}
     } catch (error) {

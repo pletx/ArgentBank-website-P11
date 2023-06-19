@@ -5,9 +5,9 @@ import Home from './pages/Home/Home';
 import Sign_in from './pages/SIgnin/Sign_in';
 import User from './pages/User/user';
 import NotFound from './pages/NotFound/NotFound';
-import Header from './components/header/header';
+import Headercontainer from './containers/headercontainer';
 import Footer from './components/footer/footer';
-import logo from'./assets/img/argentBankLogo.png'
+
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducers';
@@ -20,7 +20,7 @@ function App() {
   return (
     <Provider store={store}>
   <BrowserRouter>
-    <Header logo={logo} logolink='/'/>
+    <Headercontainer />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Sign_in />} />

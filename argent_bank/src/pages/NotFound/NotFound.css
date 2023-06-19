@@ -1,4 +1,4 @@
-h2{color: rgb(133, 255, 96);
+h2{color: rgb(32, 136, 0);
     height: 263px;
     font-size: 288px;
     margin: 100px 0 40px 0px ;
@@ -10,14 +10,13 @@ h2{color: rgb(133, 255, 96);
 }
 .pagetxt p{
     font-size: 36px;
-    color: rgb(0, 170, 0);
-    margin-bottom: 182px;
-    margin-top: 66px;
+    color: rgb(71, 170, 0);
+    margin-bottom: 18px;
+    margin-top: 10px;
     align-self: center;
 }
 .pagetxt a p{
     font-size: medium;
-   
     margin :0;
 }
 .pagetxt a{

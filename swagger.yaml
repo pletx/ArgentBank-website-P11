@@ -144,7 +144,7 @@ paths:
       parameters:
         - name: Authorization
           in: header
-          description: Attach jwt token
+          description: Attach JWT token
           required: true
           type: string
         - name: accountId
@@ -159,17 +159,24 @@ paths:
           type: string
       responses:
         '200':
-          description: Transaction's information retrieved successfully
-          examples:
+          description: Transaction information retrieved successfully
+          content:
             application/json:
-              {
-                "date": string,
-                "description": string,
-                "amount": float,
-                "balance": float,
-                "category": string,
-                "note": string
-              }
+              schema:
+                type: object
+                properties:
+                  date:
+                    type: string
+                  description:
+                    type: string
+                  amount:
+                    type: number
+                  balance:
+                    type: number
+                  category:
+                    type: string
+                  note:
+                    type: string
         '401':
           description: Unauthorized - Invalid or missing token
         '403':
@@ -178,7 +185,7 @@ paths:
           description: Transaction not found or does not exist
         '500':
           description: Internal Server Error
-        
+      
     delete:
       security:
         - bearerAuth: []
@@ -200,8 +207,10 @@ paths:
       responses:
         '200':
           description: Transaction deleted successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
         '401':
           description: Unauthorized - Invalid or missing token
         '403':
@@ -210,7 +219,7 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-        
+
   /accounts/{accountId}/transactions/{transactionId}/category:
     put:
       security:
@@ -225,10 +234,10 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/Category'
+            $ref: '#/components/schemas/Category'
         - name: Authorization
           in: header
-          description: Attach jwt token
+          description: Attach JWT token
           required: true
           type: string
         - name: accountId
@@ -256,8 +265,6 @@ paths:
       responses:
         '200':
           description: Transaction category modified successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
         '400':
           description: Bad request - Error in the provided data
         '401':
@@ -283,10 +290,10 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/Note'
+            $ref: '#/components/schemas/Note'
         - name: Authorization
           in: header
-          description: Attach jwt token
+          description: Attach JWT token
           required: true
           type: string
         - name: accountId
@@ -314,8 +321,6 @@ paths:
       responses:
         '200':
           description: Transaction note modified successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
         '400':
           description: Bad request - Error in the provided data
         '401':
@@ -327,78 +332,29 @@ paths:
         '500':
           description: Internal Server Error
 
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
-definitions:
-  User:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
-      userName:
-        type: string
-        description: user public name
-  Login:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-  ApiResponse:
-    type: object
-    properties:
-      status:
-        type: integer
-      message:
-        type: string
-      body:
-        type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
-  LoginResponse:
-    type: object
-    properties:
-      token:
-        type: string
-  UserProfile:
-    type: object
-    properties:
-      userName:
-        type: string
-  Note:
-    type: object
-    properties:
-      newnote:
-        type: string
-  Category:
-    type: object
-    properties:
-      newcategory:
-        type: string
-  Transactions:
-    type: array
-    items:
+components:
+  schemas:
+    ApiResponse:
       type: object
       properties:
-        ID:
+        status:
+          type: integer
+        message:
           type: string
-        value:
-          type: number
-
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+    Note:
+      type: object
+      properties:
+        newnote:
+          type: string
+    Category:
+      type: object
+      properties:
+        newcategory:
+          type: string

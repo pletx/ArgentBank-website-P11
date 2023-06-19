@@ -1,8 +1,8 @@
 import React from 'react';
 import Feature from '../components/feature/feature';
-import chaticon from '../assets/img/icon-chat.png'
-import securityicon from '../assets/img/icon-security.png'
-import moneyicon from '../assets/img/icon-money.png'
+import chaticon from '../assets/img/icon-chat.webp'
+import securityicon from '../assets/img/icon-security.webp'
+import moneyicon from '../assets/img/icon-money.webp'
 import PropTypes from 'prop-types';
 import './features.css';
 function Features(props) {
