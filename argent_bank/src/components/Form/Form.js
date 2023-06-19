@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function Form({ onFormSubmit }) {
+function Form(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -21,7 +21,7 @@ function Form({ onFormSubmit }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onFormSubmit(email, password, rememberMe);
+    props.onFormSubmit(email, password, rememberMe);
   };
 
   return (

@@ -65,8 +65,6 @@ paths:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
-      #produces:
-       # - application/json
       responses:
         '200':
           description: User profile retrieved successfully
@@ -112,7 +110,7 @@ paths:
       parameters:
         - name: Authorization
           in: header
-          description: Attach jwt token
+          description: Attach JWT token
           required: true
           type: string
         - name: accountId
@@ -120,7 +118,6 @@ paths:
           description: ID of the account
           required: true
           type: string
-        
       responses:
         '200':
           description: Transactions retrieved successfully
@@ -132,7 +129,6 @@ paths:
           description: Forbidden - User does not have access to the account
         '500':
           description: Internal Server Error
-        
   /accounts/{accountId}/transactions/{transactionId}:
     get:
       security:
@@ -160,23 +156,8 @@ paths:
       responses:
         '200':
           description: Transaction information retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  date:
-                    type: string
-                  description:
-                    type: string
-                  amount:
-                    type: number
-                  balance:
-                    type: number
-                  category:
-                    type: string
-                  note:
-                    type: string
+          schema:
+            $ref: '#/definitions/Transaction'
         '401':
           description: Unauthorized - Invalid or missing token
         '403':
@@ -185,41 +166,6 @@ paths:
           description: Transaction not found or does not exist
         '500':
           description: Internal Server Error
-      
-    delete:
-      security:
-        - bearerAuth: []
-      tags:
-        - Transaction Module
-      summary: Delete a specific transaction for a specific account
-      description: Deletes a specific transaction for a specific account
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of the account
-          required: true
-          type: string
-        - name: transactionId
-          in: path
-          description: ID of the transaction to delete
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Transaction deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '401':
-          description: Unauthorized - Invalid or missing token
-        '403':
-          description: Forbidden - User does not have access to the account or transaction
-        '404':
-          description: Transaction not found
-        '500':
-          description: Internal Server Error
-
   /accounts/{accountId}/transactions/{transactionId}/category:
     put:
       security:
@@ -231,10 +177,10 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Update user profile attributes
+          description: Update transaction category
           required: true
           schema:
-            $ref: '#/components/schemas/Category'
+            $ref: '#/definitions/Category'
         - name: Authorization
           in: header
           description: Attach JWT token
@@ -255,13 +201,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                category:
-                  type: string
-                  description: Updated category of the transaction
-              required:
-                - category
+              $ref: '#/definitions/Category'
       responses:
         '200':
           description: Transaction category modified successfully
@@ -275,7 +215,6 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-
   /accounts/{accountId}/transactions/{transactionId}/note:
     put:
       security:
@@ -287,10 +226,10 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Update user profile attributes
+          description: Update transaction note
           required: true
           schema:
-            $ref: '#/components/schemas/Note'
+            $ref: '#/definitions/Note'
         - name: Authorization
           in: header
           description: Attach JWT token
@@ -311,13 +250,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                note:
-                  type: string
-                  description: Updated note of the transaction
-              required:
-                - note
+              $ref: '#/definitions/Note'
       responses:
         '200':
           description: Transaction note modified successfully
@@ -332,29 +265,101 @@ paths:
         '500':
           description: Internal Server Error
 
-components:
-  schemas:
-    ApiResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        body:
-          type: object
-          properties:
-            id:
-              type: string
-            email:
-              type: string
-    Note:
-      type: object
-      properties:
-        newnote:
-          type: string
-    Category:
-      type: object
-      properties:
-        newcategory:
-          type: string
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: User password
+      firstName:
+        type: string
+        description: User first name
+      lastName:
+        type: string
+        description: User last name
+      userName:
+        type: string
+        description: User public name
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: User password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      userName:
+        type: string
+  Note:
+    type: object
+    properties:
+      newNote:
+        type: string
+  Category:
+    type: object
+    properties:
+      newCategory:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      date:
+        type: string
+        description: Transaction date
+      description:
+        type: string
+        description: Transaction description
+      amount:
+        type: number
+        description: Transaction amount
+      balance:
+        type: number
+        description: Account balance after the transaction
+      category:
+        type: string
+        description: Transaction category
+      note:
+        type: string
+        description: Transaction note
+  Transactions:
+    type: object
+    properties:
+      ID:
+        type: string
+        description: Transaction date
+      acountID:
+        type: string
+        description: Transaction description
+      

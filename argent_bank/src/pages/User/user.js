@@ -17,20 +17,18 @@ function User() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if(localStorage.getItem('token')!== undefined && localStorage.getItem('token')!== null)
-      { await editname(newName,true);
+      if(localStorage.getItem('token'))
+            { await editname(newName,true);
         const userData=await Getuserdata(true);
         dispatch(await loginSuccess(userData.body));}
-
-      if(sessionStorage.getItem('token')!== undefined && sessionStorage.getItem('token')!== null)
-      {await editname(newName,false);
+        if(sessionStorage.getItem('token'))
+        {await editname(newName,false);
       const userData=await Getuserdata(false);
       dispatch(await loginSuccess(userData.body));}
     } catch (error) {
       console.error('Error submitting new name:', error);
     }
     setIsEditing(false);
-    
     navigate('/profile')
   };
   const tokenCheck = async (rememberme) => {
