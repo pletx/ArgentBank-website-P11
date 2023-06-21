@@ -28,6 +28,7 @@ export const fetchlogin = async (email, password,rememberme) => {
   }
   
 };
+
 export const Getuserdata = async (rememberme) => {
   if(rememberme===true){
   try {
@@ -61,6 +62,7 @@ if(rememberme===false){
     throw error;}
 };
 }
+
 export const editname = async (newName,rememberme) => {
   if(rememberme===true){try {
     const response = await fetch(`${API_BASE_URL}/user/profile`, {
@@ -72,12 +74,12 @@ export const editname = async (newName,rememberme) => {
         userName: newName,
       }),
     });
-
     const data = await response.json();
     console.log(data)
   } catch (error) {
     console.error('Error Editname:', error);
   }}
+
   else{try {
     const response = await fetch(`${API_BASE_URL}/user/profile`, {
       method: 'PUT',

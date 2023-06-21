@@ -166,6 +166,7 @@ paths:
           description: Transaction not found or does not exist
         '500':
           description: Internal Server Error
+
   /accounts/{accountId}/transactions/{transactionId}/category:
     put:
       security:
@@ -175,12 +176,6 @@ paths:
       summary: Modify the category of a specific transaction
       description: Modifies the category of a specific transaction for a specific account
       parameters:
-        - in: body
-          name: body
-          description: Update transaction category
-          required: true
-          schema:
-            $ref: '#/definitions/Category'
         - name: Authorization
           in: header
           description: Attach JWT token
@@ -205,6 +200,90 @@ paths:
       responses:
         '200':
           description: Transaction category modified successfully
+        '400':
+          description: Bad request - Error in the provided data
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Delete the category of a specific transaction
+      description: Deletes the category of a specific transaction for a specific account
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach JWT token
+          required: true
+          type: string
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to delete the category
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Transaction category deleted successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+      - Transaction Module
+      summary: Add a category to a specific transaction
+      description: Adds a category to a specific transaction for a specific account
+      parameters:
+        - name: body
+          in: body
+          description: Add transaction category
+          required: true
+          schema:
+            $ref: '#/definitions/Note'
+        - name: Authorization
+          in: header
+          description: Attach JWT token
+          required: true
+          type: string
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to add the category
+          required: true
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Note'
+      responses:
+        '201':
+          description: category added successfully
         '400':
           description: Bad request - Error in the provided data
         '401':
@@ -254,6 +333,88 @@ paths:
       responses:
         '200':
           description: Transaction note modified successfully
+        '400':
+          description: Bad request - Error in the provided data
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Transaction Module
+      summary: Delete the note of a specific transaction
+      description: Deletes the note of a specific transaction for a specific account
+      parameters:
+        - name: Authorization
+          in: header
+          description: Attach JWT token
+          required: true
+          type: string
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to delete the note
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Transaction note deleted successfully
+        '401':
+          description: Unauthorized - Invalid or missing token
+        '403':
+          description: Forbidden - User does not have access to the account or transaction
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+      - Transaction Module
+      summary: Add a note to a specific transaction
+      description: Adds a note to a specific transaction for a specific account
+      parameters:
+        - name: body
+          in: body
+          description: Add transaction note
+          required: true
+          schema:
+            $ref: '#/definitions/Note'
+        - name: Authorization
+          in: header
+          description: Attach JWT token
+          required: true
+          type: string
+        - name: accountId
+          in: path
+          description: ID of the account
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to add the note
+          required: true
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Note'
+      responses:
+        '201':
+          description: Note added successfully
         '400':
           description: Bad request - Error in the provided data
         '401':
@@ -354,12 +515,20 @@ definitions:
         type: string
         description: Transaction note
   Transactions:
-    type: object
-    properties:
-      ID:
-        type: string
-        description: Transaction date
-      acountID:
-        type: string
-        description: Transaction description
+    type: array
+    items:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: Transaction ID
+        acountID:
+          type: string
+          description: Account ID for transaction
+        availableBalance:
+          type: number
+          description: User balance
+
+         
       
+

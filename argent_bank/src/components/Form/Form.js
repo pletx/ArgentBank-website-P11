@@ -34,7 +34,7 @@ function Form(props) {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} onChange={handlePasswordChange} />
       </div>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {props.errorMessage && <p className="error-message">{props.errorMessage}</p>}
       <div className="input-remember">
         <input type="checkbox" id="remember-me" onChange={handleRememberMeChange} />
         <label htmlFor="remember-me">Remember me</label>

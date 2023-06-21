@@ -38,7 +38,8 @@ function User() {
       console.log('autoconnec ? avec ', checkResponse.body);
       dispatch(await loginSuccess(checkResponse.body));
       navigate('/profile')
-    } 
+    }
+    else{navigate('/login');} 
   };
   useEffect(() => {
     if (!userConnected) {

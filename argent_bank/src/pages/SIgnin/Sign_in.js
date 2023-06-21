@@ -36,12 +36,11 @@ function Sign_in() {
       console.log('autoconnec ? avec ', checkResponse.body);
       dispatch(await loginSuccess(checkResponse.body));
       navigate('/profile')
-    } 
+    }
   };
 
   useEffect(() => {
     if (!userConnected) {
-      console.log('userConnected', userConnected);
       if(sessionStorage.getItem('token')) {
         tokenCheck(false);}
 
@@ -66,7 +65,7 @@ function Sign_in() {
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Login</h1>
-          <Form onFormSubmit={handleSubmit} />
+          <Form onFormSubmit={handleSubmit} errorMessage={errorMessage} />
         </section>
       </main>
     </div>}</>
